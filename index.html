@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduMosaic - Login & Register</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore-compat.js"></script>
+  </head>
+<body>
+  <div class="container">
+    <div class="login-card">
+      <div class="header">
+        <i data-lucide="school" class="logo"></i>
+        <h1 id="formTitle">Welcome to EduMosaic</h1>
+        <p id="formSubtitle">Sign in to your account</p>
+      </div>
+
+      <div id="loginForm" class="form">
+        <div class="form-group">
+          <i data-lucide="building" class="input-icon"></i>
+          <select id="loginCollege" required>
+            <option value="">Select College/Institute</option>
+            <option value="MVLU">Sheth L.U.J & Sir M.V College</option>
+            <option value="CHINAI">Chinai College </option>
+            <option value="TRCAC">Thakur Ramnarayan College</option>
+            <option value="Dalmia">Prahladrai Dalmia Lions College </option>
+            <option value="Dahanukar">M.L. Dahanukar College </option>
+            <option value="MITHIBAI">Shree L.R Tiwari College </option>
+            <option value="NM">Bhartiya Vidya Bhavans College </option>
+            <option value="NIRMALA">Nirmala Memorial Foundation College </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <i data-lucide="user-circle" class="input-icon"></i>
+          <select id="loginRole" required>
+            <option value="">Select Role</option>
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <i data-lucide="building-2" class="input-icon"></i>
+          <select id="loginDepartment" required>
+            <option value="">Select Department</option>
+            <option value="IT">IT</option>
+            <option value="CS">CS</option>
+            <option value="BT">BT</option>
+            <option value="BAMMC">BAMMC</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <i data-lucide="mail" class="input-icon"></i>
+          <input type="email" id="loginEmail" placeholder="Email address" required>
+        </div>
+
+        <div class="form-group">
+          <i data-lucide="lock" class="input-icon"></i>
+          <input type="password" id="loginPassword" placeholder="Password" required>
+        </div>
+
+        <div class="remember-forgot">
+          <label class="remember">
+            <input type="checkbox" id="remember">
+            <span>Remember me</span>
+          </label>
+          <a href="#" class="forgot">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="submit-btn" onclick="handleLogin(event)">Sign in</button>
+
+        <p class="toggle-form">
+          Don't have an account? <a href="#" onclick="toggleForm(event)">Register</a>
+        </p>
+      </div>
+
+      <div id="registerForm" class="form hidden">
+        <div class="form-group">
+          <i data-lucide="user" class="input-icon"></i>
+          <input type="text" id="fullName" placeholder="Full Name" required>
+        </div>
+      
+        <div class="form-group">
+          <i data-lucide="mail" class="input-icon"></i>
+          <input type="email" id="registerEmail" placeholder="Email address" required>
+        </div>
+      
+        <div class="form-group">
+          <i data-lucide="phone" class="input-icon"></i>
+          <input type="tel" id="phone" placeholder="Phone Number" pattern="[0-9]{10}" required>
+        </div>
+      
+        <div class="form-group">
+          <i data-lucide="building" class="input-icon"></i>
+          <select id="registerCollege" required>
+            <option value="">Select College/Institute</option>
+            <option value="MVLU">Sheth L.U.J & Sir M.V College</option>
+            <option value="CHINAI">Chinai College </option>
+            <option value="TRCAC">Thakur Ramnarayan College</option>
+            <option value="Dalmia">Prahladrai Dalmia Lions College </option>
+            <option value="Dahanukar">M.L. Dahanukar College </option>
+            <option value="MITHIBAI">Shree L.R Tiwari College </option>
+            <option value="NM">Bhartiya Vidya Bhavans College </option>
+            <option value="NIRMALA">Nirmala Memorial Foundation College </option>
+          </select>
+        </div>
+      
+        <div class="form-group">
+          <i data-lucide="building-2" class="input-icon"></i>
+          <select id="registerDepartment" required>
+            <option value="">Select Department</option>
+            <option value="IT">IT</option>
+            <option value="CS">CS</option>
+            <option value="BT">BT</option>
+            <option value="BAMMC">BAMMC</option>
+          </select>
+        </div>
+      
+        <div class="form-group">
+          <i data-lucide="lock" class="input-icon"></i>
+          <input type="password" id="registerPassword" placeholder="Password" required>
+        </div>
+      
+        <div class="form-group">
+          <i data-lucide="lock" class="input-icon"></i>
+          <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+        </div>
+      
+        <div class="gender-group">
+          <label>Gender:</label>
+          <div class="radio-group">
+            <label class="radio">
+              <input type="radio" name="gender" value="male" required>
+              <span>Male</span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="gender" value="female">
+              <span>Female</span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="gender" value="other">
+              <span>Other</span>
+            </label>
+          </div>
+        </div>
+      
+        <button type="submit" class="submit-btn" onclick="handleRegister(event)">Create Account</button>
+      
+        <p class="toggle-form">
+          Already have an account? <a href="#" onclick="toggleForm(event)">Sign in</a>
+        </p>
+      </div>
+    </div>
+  </div>
+  <script src="auth-service.js"></script>
+  <script src="login.js"></script>
+
+</body>
+</html>
